@@ -10,7 +10,6 @@ var proxyContract = "0x003F5d5bB97028AF17B0925B08cb184a74F9030f"
 		var treasuryAddress = "0x3a4DA32dc29b146F26D8527e37FeaAe45fBebe69";
 
 				
-				const tokenTicker = "OINK"
 		  
 const range = document.getElementById('formControlRange');
 const client = document.getElementById('client');
