@@ -15,7 +15,7 @@
 		msgToDisplay+= '<strong>Wallet NOT connected:</br> </strong><button type="button" class="swal2-confirm swal2-styled" style="display: inline-block;" onclick="auth2()"><i class="fa fa-thumbs-up"></i> Connect Wallet</button></br></br></br></br>'
 	}
 
-	msgToDisplay+= '<a href="#" onclick="getToken();"><button class="swal2-cancel btn btn-danger" style="display: inline-block;">Get '+tokenTicker+'</button> </br><a href="'+twitterURL+'" target="_blank"><img src="img/twitter.svg" height="50px"></a>&nbsp&nbsp<a href="'+telegramLink+'" target="_blank"><img src="img/telegram.svg" height="40px"></a></br></br>';
+	msgToDisplay+= '<a href="#" onclick="getToken();"><button class="swal2-cancel btn btn-danger" style="display: inline-block;">Get '+tokenTicker+'</button> </br></br>';
 	//if(userLength>0) { msgToDisplay+='<button class="swal2-confirm swal2-styled" style="display: inline-block;"  onclick="logout();"> Logout</button>'; }
 	msgToDisplay+= '<button type="button" class="swal2-cancel swal2-styled" aria-label="" style="display: inline-block; background-color: rgb(221, 51, 51);" onclick="Swal.close()">Close Settings</button>';
 
