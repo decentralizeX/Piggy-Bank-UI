@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Piggy Bank: Pools & Farms</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="siteFiles/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="siteFiles/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <link rel="stylesheet" href="siteFiles/vendors/jqvmap/jqvmap.min.css">
+  <link rel="stylesheet" href="siteFiles/vendors/flag-icon-css/css/flag-icon.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="siteFiles/css/vertical-layout-dark/style.css">
+  <!-- endinject -->
+   <link rel="stylesheet" href="siteFiles/vendors/font-awesome/css/font-awesome.min.css"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+<link rel="manifest" href="favicon/site.webmanifest">
+
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<script src="js/ethers.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+   <script type="text/javascript" src="https://unpkg.com/web3@1.6.0/dist/web3.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/web3modal@1.9.4/dist/index.js"></script>
+<script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.6.6/dist/umd/index.min.js"></script>
+<script type="text/javascript" src="js/walletlink.bundle.js"></script>
+  <script src="1config.js"></script>
+
+    <style>
+.customloader {
+  border: 7px solid #f3f3f3; /* Light grey */
+  border-top: 7px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 7px;
+  height: 7px;
+  animation: spin 2s linear infinite;
+  display: inline-block;
+}
+
+.customloader2 {
+  border: 25px solid #f3f3f3; /* Light grey */
+  border-top: 25px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  animation: spin 2s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+</style>  <style>.web3modal-modal-lightbox { z-index: 9999 !important; }</style></head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center">
+        <a class="navbar-brand brand-logo" href="index.html"><img src="img/dtx-logo.png" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="favicon/favicon-32x32.png" alt="logo"/></a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="mdi mdi-menu"></span>
+        </button>
+
+        <ul class="navbar-nav navbar-nav-right">
+      
+          
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link" href="#" id="userSettings">
+              <img src="img/profile.png" style="display: block;border-radius: 35px;border: 1px solid #9739C2;" alt="profile"/>
+            </a>
+          </li>
+          
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+        
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+	  
+
+     <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+		<div style="display: inline;">
+			<li class="nav-item">
+    
+        
+              <span class="menu-title"><center> <img src="img/pulsechain.png" style="max-height: 18px;"></center></span>
+            
+          </li>
+	
+		  <li class="nav-item">
+            <a class="nav-link" href="#" onclick="addToMetamask();">
+              
+              <span class="menu-title" style="display: block;
+  margin-left: auto;
+  margin-right: auto;"><img src="favicon/favicon-32x32.png" width="20px" height="20px"> OINK: <font color="green">$</font><small><div id="DTX-price" style="display:inline;"></div></small></span>
+            </a>
+          </li>
+
+		
+		  </div>
+		  
+		    		  		  
+		    
+		  
+		  
+		  
+
+
+
+		  
+		  		  
+		    <li class="nav-item">
+            <a class="nav-link collapsed show" href="#pulseEcosystem">
+          <i class="mdi mdi-account-switch menu-icon"></i>
+              <span class="menu-title">Pulse-Ecosystem Mining</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div id="pulseEcosystem">
+              <ul class="nav flex-column sub-menu">
+			   <li class="nav-item"> <a class="nav-link" href="pulse-ecosystem-mining.html">Start New Miner</a></li>
+			  <li class="nav-item"> <a class="nav-link" href="view-pulse-ecosystem-miners.html">Your Pulse Miners</a></li><li class="nav-item"> <a class="nav-link" href="referral.html">Referral</a></li>
+			  
+               <!-- <li class="nav-item"> <a class="nav-link" href="pulse-ecosystem-mining.html">Mine w/ Incentive(INC)</a></li>
+				<li class="nav-item"> <a class="nav-link" href="pulse-ecosystem-mining.html">Mine w/ Pulsechain(PLS)</a></li>
+				<li class="nav-item"> <a class="nav-link" href="pulse-ecosystem-mining.html">Mine w/ PulseX(PLSX)</a></li>
+				<li class="nav-item"> <a class="nav-link" href="pulse-ecosystem-mining.html">Mine w/ HEX token</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pulse-ecosystem-mining.html">Mine w/ HEX Shares</a></li>
+            -->
+ 
+              </ul>
+            </div>
+          </li>
+		  
+		  <li class="nav-item">
+            <a class="nav-link collapsed show" href="#stakingPlatform">
+          <i class="mdi mdi-biohazard menu-icon"></i>
+              <span class="menu-title">Mining Platform</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div id="miningPlatform">
+              <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="create-miner.html">Create new Miner</a></li>
+				  <li class="nav-item"> <a class="nav-link" href="view-all-miner.html">View All Miners</a></li>
+				   <li class="nav-item"> <a class="nav-link" href="view-miner-card.html">Miners (Card View)</a></li>
+				     
+
+			 <!--  <ul class="nav flex-column sub-menu">
+     <li class="nav-item"> <a class="nav-link" href="1month.html">1 Month</a></li>
+              <li class="nav-item"> <a class="nav-link" href="3month.html">3 Month</a></li>
+			  <li class="nav-item"> <a class="nav-link" href="6month.html">6 Month</a></li>
+			  <li class="nav-item"> <a class="nav-link" href="1year.html">1 Year</a></li>
+			  <li class="nav-item"> <a class="nav-link" href="3year.html">3 Year</a></li>
+			  <li class="nav-item"> <a class="nav-link" href="5year.html">5 Year</a></li>
+            
+				
+             
+               
+              </ul>-->
+            
+				
+               <!-- <li class="nav-item"> <a class="nav-link" href="pages/charts/sparkline.html">Sync Admin</a></li>-->
+               
+              </ul>
+            </div>
+          </li>
+		  
+		  		    
+		  
+		  
+
+		  
+		  <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#" onclick="getToken();">
+              <i class="mdi mdi-ev-station menu-icon"></i>
+              <span class="menu-title">Get OINK</span>
+            
+            </a>
+
+          </li>
+<li class="nav-item">
+            <a class="nav-link" href="https://t.me/OINK-pls" target="_blank">
+             <i class="mdi mdi-telegram menu-icon"></i>
+              <span class="menu-title">Telegram</span>
+            </a>
+          </li>
+
+
+
+<li class="nav-item">
+            <a class="nav-link" href="https://oink-pls.com/" target="_blank">
+             <i class="mdi mdi-book-open-page-variant menu-icon"></i>
+              <span class="menu-title">FAQ & Whitepaper</span>
+            </a>
+          </li>
+		  
+		 
+		  	  
+		  
+          	   <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="mdi mdi-clipboard-text-outline menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+
+	  
+		 
+		    <li class="nav-item">
+            <a class="nav-link" href="available-actions.html">
+              <i class="mdi mdi-account-convert menu-icon"></i>
+              <span class="menu-title">Action Panel</span>
+            </a>
+          </li>
+
+<button id="showAdvancedButton" class="btn btn-primary">Show Governance</button>
+
+		  
+		  <div id="showGovernance" style="display: none;">
+	
+		  
+		  
+    
+		        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+              <i class="mdi mdi-heart-pulse menu-icon"></i>
+              <span class="menu-title">Basic Settings</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="charts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="basic-settings.html">Cost To Vote</a></li>
+                <li class="nav-item"> <a class="nav-link" href="basic-settings.html">Delay Before Enforce</a></li>
+                <li class="nav-item"> <a class="nav-link" href="basic-settings.html">Roll-Over Bonuses</a></li>
+				 <li class="nav-item"> <a class="nav-link" href="basic-settings.html">Manage Fees</a></li>
+                <li class="nav-item"> <a class="nav-link" href="basic-settings.html">Harvest Reward</a></li>
+               <!-- <li class="nav-item"> <a class="nav-link" href="pages/charts/sparkline.html">Sync Admin</a></li>-->
+               
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+			   <i class="mdi mdi-coin menu-icon"></i>
+              <span class="menu-title">Reward Boost</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="reward-boost.html">Reward Boost</a></li>
+                <li class="nav-item"> <a class="nav-link" href="reward-boost.html">Event Threshold</a></li>
+                
+              </ul>
+            </div>
+          </li>
+		  
+		  
+		  
+		  
+		  
+		  
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false" aria-controls="ui-advanced">
+              <i class="mdi mdi-layers menu-icon"></i>
+              <span class="menu-title">Reward Allocation</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-advanced">
+              <ul class="nav flex-column sub-menu">
+			  <li class="nav-item"> <a class="nav-link" href="pools-farms.html">T-Share Allocation</a></li>
+				    <li class="nav-item"> <a class="nav-link" href="pools-farms.html">PLS allocation</a></li>
+					   <li class="nav-item"> <a class="nav-link" href="pools-farms.html">HEX allocation</a></li>
+					      <li class="nav-item"> <a class="nav-link" href="pools-farms.html">PLSX allocation</a></li>
+               <li class="nav-item"> <a class="nav-link" href="pools-farms.html">INC allocation</a></li>
+            
+   <li class="nav-item"> <a class="nav-link" href="add-token.html">Add New Token</a></li>
+              </ul>
+            </div>
+          </li>
+		  
+		  
+		            <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-deflation" aria-expanded="false" aria-controls="ui-deflation">
+			   <i class="mdi mdi-fire menu-icon"></i>
+              <span class="menu-title">Deflation</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-deflation">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="token-burn.html">Token Burn</a></li>
+				<li class="nav-item"> <a class="nav-link" href="available-actions.html">Token Buy-Back</a></li>
+               <!-- <li class="nav-item"> <a class="nav-link" href="#">Event Threshold</a></li>-->
+              </ul>
+            </div>
+          </li>
+		  
+		  
+
+    
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+              <i class="mdi mdi-gavel menu-icon"></i>
+              <span class="menu-title">Voting</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tables">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="miner-voting.html">Miner Voting</a></li>
+				 <li class="nav-item"> <a class="nav-link" href="senate.html">The Senate</a></li>
+				 <li class="nav-item"> <a class="nav-link" href="delegate-vote.html">Delegate Vote</a></li>
+				   <li class="nav-item"> <a class="nav-link" href="propose-upgrade.html">Propose Upgrade</a></li>
+              </ul>
+            </div>
+          </li>
+		  
+		           <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+        <i class="mdi mdi-bank menu-icon"></i>
+              <span class="menu-title">Treasury</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+			   <li class="nav-item"><a class="nav-link" href="governor-tax.html">Governor Tax</a></li>  
+                <li class="nav-item"><a class="nav-link" href="treasury.html">Withdraw</a></li>                
+                <li class="nav-item"><a class="nav-link" href="treasury-deposit.html">Deposit</a></li>
+				 <li class="nav-item"><a class="nav-link" href="issue-miner.html">Issue Miner</a></li>
+              </ul>
+            </div>
+          </li>
+		  
+		  
+          
+
+
+		  
+		  
+		         <li class="nav-item">
+            <a class="nav-link" href="voting-credit.html">
+              <i class="mdi mdi-account-card-details  menu-icon"></i>
+              <span class="menu-title">Voting Credit</span>
+            </a>
+          </li>
+		  </div>
+	
+		  
+
+		
+
+
+		  
+	
+      
+        </ul>
+      </nav>
+
+	
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+
+           
+    
+
+		  <div class="row">
+		   <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Set Reward Allocation for Pulse Ecosystem  </h4>
+		
+                  <p class="card-description">
+                   Majority of inflation(rewards) are reserved for OINK staking(time deposits). Additionally, users can allocate rewards for liquidity farming(staking LP tokens) to incentivize liquidity, as well as rewards for staking NFTs(metaverse virtual land&art) if it proves to be beneficial for the ecosystem.
+				   There is an optional fee that can be charged upon deposit(fees are sent to the governing contract).
+                  </p>
+                
+                    <div class="form-group">
+					    <label for="exampleFormControlSelect2">Select Pool</label>&nbsp&nbsp<!--<div class="badge badge-info" style="display:inline; cursor:pointer;" onclick="rebalancePools()">Rebalance Pools</div>-->
+					<div id="show-options"></div>	 
+ 
+					    </br>
+						
+						
+                      <label for="exampleInputUsername1">New Allocation (in %):</label>
+                      <input type="text" class="form-control" id="poolAllocation" placeholder="Allocation(eg. 2.1 to allocate 2.1%)">
+					    </br>
+						
+						 
+					  <label for="exampleInputUsername1">Your commitment(in OINK)</label>
+                      <input type="text" class="form-control" id="poolAllocation-commit" placeholder="Number of tokens(eg. 5000)">
+					  
+					  </br>
+					  <label for="formControlRange3"><i id="delayInfo" class="mdi mdi-information-outline" onclick="displayDelayInfo()">  </i> Delay:  <span id="client3">0</span> Hours</label>
+        <input type="range" class="form-control-range" id="formControlRange3" style="max-width:300px;" value="0">
+		
+                    </div>
+                   
+                    <button type="submit" id="btn-poolAllocation" class="btn btn-primary mr-2">Submit</button></br></br>
+				
+               
+			  
+                </div>
+              </div>
+            </div>
+			   <div class="col-md-6 grid-margin stretch-card">
+			<div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Proposals: Pool & Farm Allocations <!--<i class="fa fa-refresh fa-lg" onclick="refreshPoolAllocation()" style="cursor: pointer;"></i>  -->                                                      
+				</br></br>   <div class="badge badge-outline-danger" style="display:inline; float: right; cursor: pointer;" id="poolAllocation-expired" onclick="poolAllocationShowExpired()">Expired</div>
+				  <div class="badge badge-success" style="display:inline; float: right; margin-right: 7px" id="poolAllocation-active" onclick="poolAllocationShowActive()">Active</div>
+				 </br>
+				  </h4>
+   
+		
+   
+   
+                    <div class="table-responsive" style="max-height:500px;display:block;" id="poolAllocationTable">
+					 <div style="height: 250px; padding: 13.37%;"><center><div class="customloader2"></div></center></div>
+					 
+					
+					 
+					
+		
+                  </div>
+                </div>
+              </div>
+		  </div>
+		  </div>
+		  
+		  
+		  
+		  
+		    
+		  
+		  
+		  
+		 
+		  
+		  
+          
+        </div>
+	
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright &#169; Piggy Bank OINK. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> made with <i class="mdi mdi-heart-outline text-primary"></i></span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  
+  
+  
+  
+  <!-- base:js -->
+  <script src="siteFiles/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <script src="siteFiles/vendors/jquery.flot/jquery.flot.js"></script>
+  <script src="siteFiles/vendors/jquery.flot/jquery.flot.pie.js"></script>
+  <script src="siteFiles/vendors/jquery.flot/jquery.flot.resize.js"></script>
+  <script src="siteFiles/vendors/jqvmap/jquery.vmap.min.js"></script>
+  <script src="siteFiles/vendors/jqvmap/maps/jquery.vmap.world.js"></script>
+  <script src="siteFiles/vendors/jqvmap/maps/jquery.vmap.usa.js"></script>
+  <script src="siteFiles/vendors/peity/jquery.peity.min.js"></script>
+  <script src="siteFiles/js/jquery.flot.dashes.js"></script>
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="siteFiles/js/off-canvas.js"></script>
+  <script src="siteFiles/js/hoverable-collapse.js"></script>
+  <script src="siteFiles/js/template.js"></script>
+  <script src="siteFiles/js/settings.js"></script>
+  <script src="siteFiles/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- Custom js for this page-->
+  <script src="siteFiles/js/dashboard.js"></script>
+  <!-- End custom js for this page-->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="js/auth.js"></script>
+	<script src="js/userProfile.js"></script>
+	<script src="js/poolsFarms.js"></script>
+	<script src="js/confetti.js"></script>
+
+
+ <script>
+    $("#delayInfo").hover(function() {
+        $(this).css('cursor','pointer').attr('title', 'If outvoted, the proposal can be rejected at any time. Delay is the amount of time during which the proposal can not be rejected. Delay gives time to accumulate votes in favor of the proposal.');
+    }, function() {
+        $(this).css('cursor','auto');
+    });
+	    $("#delayInfo2").hover(function() {
+        $(this).css('cursor','pointer').attr('title', 'If outvoted, the proposal can be rejected at any time. Delay is the amount of time during which the proposal can not be rejected. Delay gives time to accumulate votes in favor of the proposal.');
+    }, function() {
+        $(this).css('cursor','auto');
+    });
+	
+	</script>
+
+		  
+</body>
+
+</html>
+
