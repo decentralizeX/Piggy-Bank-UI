@@ -201,7 +201,7 @@ var totalVotingPower
     }
   }
 </style>`
-	htmlMessage+= '</br>'+displayRatios+'</br></br></br>Total '+tokenTicker+' Staked: ' + Intl.NumberFormat().format(Math.round(totalStaked / (10**6))) +'M</br> Required Threshold: ' + Intl.NumberFormat().format(Math.round(totalStaked * 0.15 / 10**6)) + 'M '+tokenTicker+'<small>(weighted)</small> </br></br> <strong>Current Progress:</strong><div style="width: '+Math.round(currentProgress*10)/10+'%; background-color:#4CAF50; padding: 3px; border-radius: 3px; font-weight: bold; text-align: center; animation: pulse 1s ease-in-out infinite; color: black; background-image: linear-gradient(to right, #4CAF50 0%, #4CAF50 '+Math.round(currentProgress*10)/10+'%, white '+Math.round(currentProgress*10)/10+'%);">' + Intl.NumberFormat().format(Math.round(currentProgress*10)/10) + '%</div>' + style
+	htmlMessage+= '</br>'+displayRatios+'</br></br></br>Total '+tokenTicker+' Staked: ' + Intl.NumberFormat().format(Math.round(totalStaked / (10**6))) +'M</br> Required Threshold: ' + Intl.NumberFormat().format(Math.round(totalStaked * 0.15 / 10**6)) + 'M '+tokenTicker+'<small>(weighted)</small> </br></br> <strong>Current Progress:</strong><div style="max-width: 100%; width: '+Math.round(currentProgress*10)/10+'%; background-color:#4CAF50; padding: 3px; border-radius: 3px; font-weight: bold; text-align: center; animation: pulse 1s ease-in-out infinite; color: black; background-image: linear-gradient(to right, #4CAF50 0%, #4CAF50 '+Math.round(currentProgress*10)/10+'%, white '+Math.round(currentProgress*10)/10+'%);">' + Intl.NumberFormat().format(Math.round(currentProgress*10)/10) + '%</div>' + style
 
     document.getElementById("display-votes").innerHTML = htmlMessage;
 	
