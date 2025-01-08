@@ -4,7 +4,7 @@ var ABI = [{"inputs":[{"internalType":"address","name":"_forWallet","type":"addr
 		var tokenTicker = 'OINK'
 		var consensusContract = "0x7917e04Eb4463CF80Cc00040BA0f1fF125926eF3"
 		var helperContract = "0x003F5d5bB97028AF17B0925B08cb184a74F9030f"
-		var governorContract = "0x7d66563D6838E6F78eBfA0C2b405754ad687bacF"
+		var governorContract = "0x331146b366c0Cd2AcA542ce71E5D6fb66bf07D16"
 		
 		
 
@@ -68,7 +68,7 @@ var totalVotingPower
 
 			const totalBalance = Math.round(pool1*0.2 + pool2*0.3 + pool3*0.5 + pool4*0.75 + pool5*1.15 + pool6*1.5);
 			
-			if(totalBalance > 0) { htmlMessage+='</br><label for="exampleInputUsername1">Your Effective Voting Power:</label><input type="text" class="form-control" value="' + Intl.NumberFormat().format(totalBalance) + ' '+tokenTicker+' (' + round((totalBalance/totalVotingPower * 100), 5) + '% of total)">'} else { htmlMessage = "You have 0 '+tokenTicker+' staked and thus no power. Time to get some '+tokenTicker+' and stake them! What are you waiting for?"; }
+			if(totalBalance > 0) { htmlMessage+='</br><label for="exampleInputUsername1">Your Effective Voting Power:</label><input type="text" class="form-control" value="' + Intl.NumberFormat().format(totalBalance) + ' '+tokenTicker+' (' + round((totalBalance/totalVotingPower * 100), 5) + '% of total)">'} else { htmlMessage = "You have 0 '+tokenTicker+' staked and thus no power. Time to get some '+tokenTicker+' and start mining! What are you waiting for?"; }
 	htmlMessage+= '</br></br><button onclick="window.location=\'buy.html\';" class="btn btn-primary mr-2">Get '+tokenTicker+' & Increase your power NOW</div>';
 	document.getElementById("btn-checkVotingPower").style = "display: none;";
 			document.getElementById("display-votingPower").innerHTML = '</br>'+htmlMessage;
