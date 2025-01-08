@@ -4,7 +4,7 @@ var ABI = [{"inputs":[{"internalType":"address","name":"_forWallet","type":"addr
 		var tokenTicker = 'OINK'
 		var consensusContract = "0x7917e04Eb4463CF80Cc00040BA0f1fF125926eF3"
 		var helperContract = "0x003F5d5bB97028AF17B0925B08cb184a74F9030f"
-		var governorContract = "0x331146b366c0Cd2AcA542ce71E5D6fb66bf07D16"
+		var governorContract = "0x7d66563D6838E6F78eBfA0C2b405754ad687bacF"
 		
 		
 
@@ -31,10 +31,10 @@ var totalVotingPower
 				];
 				const timeDepositContract = new ethers.Contract(contractAddress, contractAbi, provider)
 				const userShares = BigInt(await timeDepositContract.totalVotesForID(proposalID))
-				const OINKPerShare = BigInt(await timeDepositContract.getPricePerFullShare())
+				const XPDPerShare = BigInt(await timeDepositContract.getPricePerFullShare())
 				const userShares2 = Number(userShares / BigInt(10**18))
-				const OINKPerShare2 = Number(OINKPerShare / BigInt(10**18));
-				const actualTokens = Math.round(userShares2 * OINKPerShare2)
+				const XPDPerShare2 = Number(XPDPerShare / BigInt(10**18));
+				const actualTokens = Math.round(userShares2 * XPDPerShare2)
 				//console.log(actualTokens)
 				return actualTokens;
 			}
@@ -105,6 +105,8 @@ var totalVotingPower
 
 	try {
 		
+		let daMsg = ""
+		
 			let alreadyPending = await checkIfChanged()
 			//gets address for eligible new governor 
 			//now get which is for proposal ID
@@ -126,15 +128,8 @@ var totalVotingPower
 					let newTimestamp = (Number(governorRequestBlock) + Number(timeWait)) - blockNumber 
 					newTimestamp = Date.now() + newTimestamp * 10.2 * 1000
 					let msg = formatDateAndCountdown(newTimestamp)
-console.log("we here 6")
-						Swal.fire({
-						  title: '<strong>New Governing Address Has been Confirmed!',
-						  html: '<h2 class="swal2-title" id="swal2-title" style="display: block;">There is a delay for security reasons before the change can be enforced. The governor change is estimated to be finalized on: </h2></br> '+msg+'</br></br> <small>You can close this window.</small>',
-						  icon: 'success',
-						  focusConfirm: false,
-						  confirmButtonText:
-							'<i class="fa fa-thumbs-up"></i> Close'
-						})
+
+				daMsg+= 'SUCCESS! New Governing contract has passed and can be enforced! There is a delay for security reasons before the change can be enforced. The governor change is estimated to be finalized on: </br> '+msg+'</br></br>';
 				} else {
 					Swal.fire({
                 title: '<strong>Something went wrong....',
@@ -144,7 +139,8 @@ console.log("we here 6")
                 confirmButtonText: '<i class="fa fa-thumbs-up"></i> Close'
             })
 				}
-			} else {
+			}
+			console.log("alle oke")
     const pool1 = await getVotes(proposalID, pool1Month);
 			const pool2 = await getVotes(proposalID, pool3Month);
 			const pool3 = await getVotes(proposalID, pool6Month);
@@ -158,10 +154,20 @@ console.log("we here 6")
 			const pool4x = await getVotes(proposalID+1, pool1Year);
 			const pool5x = await getVotes(proposalID+1, pool3Year);
 			const pool6x = await getVotes(proposalID+1, pool5Year);
+			
+			
 
-    const totalBalance1 = pool1 * 0.2 + pool2 * 0.3 + pool3 * 0.5 + pool4 * 0.75 + pool5 * 1.15 + pool6 * 1.5;
+    let totalBalance1 = pool1 * 0.2 + pool2 * 0.3 + pool3 * 0.5 + pool4 * 0.75 + pool5 * 1.15 + pool6 * 1.5;
 	//console.log("total balance 1 is " + totalBalance1)
-    const totalBalance2 = pool1x * 0.2 + pool2x * 0.3 + pool3x * 0.5 + pool4x * 0.75 + pool5x * 1.15 + pool6x * 1.5;
+    let totalBalance2 = pool1x * 0.2 + pool2x * 0.3 + pool3x * 0.5 + pool4x * 0.75 + pool5x * 1.15 + pool6x * 1.5;
+	
+	const savedVotesFor = await getSavedVotes(proposalID)
+			const savedVotesAgainst = await getSavedVotes(proposalID+1)
+			
+			if(totalBalance1 < savedVotesFor) { totalBalance1 = savedVotesFor }
+			if(totalBalance2 < savedVotesAgainst) { totalBalance2 = savedVotesAgainst }
+			
+			htmlMessage = daMsg
     if (totalBalance1 == 0) {
         htmlMessage += '&#9989; There is no '+tokenTicker+' vote allocated in favor of this proposal</br>';
     } else {
@@ -198,8 +204,9 @@ console.log("we here 6")
 	htmlMessage+= '</br>'+displayRatios+'</br></br></br>Total '+tokenTicker+' Staked: ' + Intl.NumberFormat().format(Math.round(totalStaked / (10**6))) +'M</br> Required Threshold: ' + Intl.NumberFormat().format(Math.round(totalStaked * 0.15 / 10**6)) + 'M '+tokenTicker+'<small>(weighted)</small> </br></br> <strong>Current Progress:</strong><div style="width: '+Math.round(currentProgress*10)/10+'%; background-color:#4CAF50; padding: 3px; border-radius: 3px; font-weight: bold; text-align: center; animation: pulse 1s ease-in-out infinite; color: black; background-image: linear-gradient(to right, #4CAF50 0%, #4CAF50 '+Math.round(currentProgress*10)/10+'%, white '+Math.round(currentProgress*10)/10+'%);">' + Intl.NumberFormat().format(Math.round(currentProgress*10)/10) + '%</div>' + style
 
     document.getElementById("display-votes").innerHTML = htmlMessage;
-	}
+	
 	} catch(e) {
+		console.log(e)
 		Swal.fire({
                 title: '<strong>Something went wrong....',
                 html: 'Something went wrong. Please try again.',
@@ -246,7 +253,17 @@ async function getRemainingBlocks() {
     const userShares = await timeDepositContract.newGovernorBlockDelay()
     return userShares;
 }
-
+			async function getSavedVotes(proposalID) {
+				const contractAbi = [
+				  "function highestConsensusVotes(uint256) external view returns (uint256)"
+				];
+				const timeDepositContract = new ethers.Contract(consensusContract, contractAbi, provider)
+				const userShares = BigInt(await timeDepositContract.highestConsensusVotes(proposalID))
+				//console.log(actualTokens)
+				return Number(userShares / BigInt(10**18));
+			}
+			
+			
 async function getRequestBlock() {
     const contractAbi = [
         "function newGovernorRequestBlock() external view returns (uint256)"
@@ -296,7 +313,7 @@ async function getRequestBlock() {
 			htmlMessage+='</br>';
 			const totalBalance = Math.round(pool1*0.2 + pool2*0.3 + pool3*0.5 + pool4*0.75 + pool5*1.15 + pool6*1.5);
 	
-			if(totalBalance == 0) { htmlMessage = 'You have 0 '+tokenTicker+' staked and thus no power. Time to get some '+tokenTicker+' and stake them! What are you waiting for? </br></br><button onclick="window.location=\'https://Piggy Bank.pro\';" class="btn btn-primary mr-2">Get '+tokenTicker+' & Increase your power NOW</div>'; }
+			if(totalBalance == 0) { htmlMessage = 'You have 0 '+tokenTicker+' staked and thus no power. Time to get some '+tokenTicker+' and stake them! What are you waiting for? </br></br><button onclick="window.location=\'https://pulseDAO.pro\';" class="btn btn-primary mr-2">Get '+tokenTicker+' & Increase your power NOW</div>'; }
 
 		
 	document.getElementById("btn-finalizeVote").style = "display: block;";
