@@ -71,19 +71,19 @@ userWallet = account
 	} else {
 	
 	userWallet = encodeBase58(userWallet)
-	console.log("https://Piggy Bank.pro/mine?r="+userWallet)
+	console.log("https://oink-pls.com/mine?r="+userWallet)
 	
 		  	Swal.fire({
 						  title: '<strong>Your Referral Link:</strong>',
-						  html: '<strong>https://Piggy Bank.pro/mine?r='+userWallet+'</strong></br></br>Link has been copied to clipboard.',
+						  html: '<strong>https://oink-pls.com/mine?r='+userWallet+'</strong></br></br>Link has been copied to clipboard.',
 						  icon: 'success',
 						  focusConfirm: false,
 						  confirmButtonText:
 							'<i class="fa fa-thumbs-up"></i> Close'
 						})
 						
-						document.getElementById("referralLink").value = 'https://Piggy Bank.pro/mine?r='+userWallet
-						navigator.clipboard.writeText('https://Piggy Bank.pro/mine?r='+userWallet)
+						document.getElementById("referralLink").value = 'https://oink-pls.com/mine?r='+userWallet
+						navigator.clipboard.writeText('https://oink-pls.com/mine?r='+userWallet)
 						document.cookie = "is="+userWallet;
 						document.getElementById("btn-link").style= "display: none;"
 	}
